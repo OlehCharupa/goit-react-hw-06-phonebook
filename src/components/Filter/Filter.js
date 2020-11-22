@@ -1,10 +1,18 @@
 import React from 'react';
 import "./Filter.css"
 import { CSSTransition } from 'react-transition-group';
-const Filter = ({ filter, stateFilter, contacts }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { editInputFilter } from '../../redux/action/filterAction';
+const Filter = () => {
+    const filter = useSelector(state => state.contacts.filter)
+    const dispatch = useDispatch()
+    const inputFilter = ({ target }) => {
+        dispatch(editInputFilter(target.value))
+    }
+
 
     return (
-        <CSSTransition classNames="labelSearch" mountOnEnter unmountOnExit in={contacts.length >= 2} timeout={800}>
+        <CSSTransition classNames="labelSearch" mountOnEnter unmountOnExit in={true} timeout={800}>
             <label className="labelSearch" >
                 Find contacts by name
             <input
@@ -12,7 +20,7 @@ const Filter = ({ filter, stateFilter, contacts }) => {
                     name="filter"
                     type="text"
                     value={filter}
-                    onChange={stateFilter}
+                    onChange={inputFilter}
                 />
             </label>
         </CSSTransition>

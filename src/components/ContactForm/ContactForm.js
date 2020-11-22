@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/action/phoneBookAction';
 import "./ContactForm.css"
 
 const initialData = {
@@ -6,9 +8,15 @@ const initialData = {
     number: ""
 }
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = () => {
     const [data, setData] = useState(initialData)
     const { name, number } = data
+
+    // const contacts = useSelector(state => state.item)
+    const dispatch = useDispatch()
+
+
+
     const inputHandler = ({ target }) => {
         setData({ ...data, [target.name]: target.value })
     }
@@ -22,7 +30,7 @@ const ContactForm = ({ addContact }) => {
             name,
             number,
         }
-        addContact(singleContact)
+        dispatch(addContact(singleContact))
         setData(initialData)
     }
     return (
