@@ -26,8 +26,12 @@ const PhoneBooks = () => {
 
 
     const filterName = () => {
-        return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
-
+        const filterArray = contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
+        if (filterArray.length >= 1) {
+            return filterArray
+        } else {
+            return contacts
+        }
     }
     // const stateFilter = ({ target }) => {
     //     setFilter(target.value)
