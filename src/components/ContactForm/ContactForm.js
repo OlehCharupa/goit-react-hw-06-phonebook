@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/action/phoneBookAction';
+import { alertOpen } from "../../redux/action/alertAction"
 import "./ContactForm.css"
 
 const initialData = {
@@ -11,8 +12,7 @@ const initialData = {
 const ContactForm = () => {
     const [data, setData] = useState(initialData)
     const { name, number } = data
-
-    // const contacts = useSelector(state => state.item)
+    const contacts = useSelector(state => state.contacts.items)
     const dispatch = useDispatch()
 
 
@@ -30,11 +30,15 @@ const ContactForm = () => {
             name,
             number,
         }
-        dispatch(addContact(singleContact))
-        setData(initialData)
+        if (contacts.some(contact => contact.name === singleContact.name)) {
+            dispatch(alertOpen())
+        } else {
+            dispatch(addContact(singleContact))
+            setData(initialData)
+        }
     }
     return (
-        <form className="contactForm" onClick={submitHendler}>
+        <form className="contactForm" onSubmit={submitHendler}>
             <label className="labelName"> Name
                 <input
                     type="text"
